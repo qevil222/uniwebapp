@@ -1,0 +1,73 @@
+{% extends "template.html" %}
+{% block title %}Universities and Colleges{% endblock %}
+{% block body %}
+<!-- page content -->
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="dashboard_graph">
+      <div class="row x_title">
+        <div class="col-md-6">
+          <h2>Universities and Colleges</h2>
+        </div>
+          <!-- Search box -->
+          <div class="col-md-6">
+            <input type="text" id="unisInput" onkeyup="tableSearch();" placeholder="Search for universities..." style="float: right;">
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <table class="table table-hover" id="unisTable">
+              <thead>
+                <tr>
+                  <th>JUPAS Code</th>
+                  <th>University</th>
+                  <th>Degree</th>
+                  <th>Website</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for programme in programmes %}
+                <tr>
+                  <td>{{ programme[0] }}</td>
+                  <td>{{ programme[1] }}</td>
+                  <td>{{ programme[2] }}</td>
+                  <td><a href="{{ programme[3] }}">Link</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<!-- /page content -->
+{% endblock %}
+{% block js %}
+<script>
+  function tableSearch() {
+    // Declare variables
+    var input, filter, table, tr, tds, td, i, txtValue;
+    input = document.getElementById("unisInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("unisTable");
+    tr = table.getElementsByTagName("tr");
+    console.log(filter);
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+{% endblock %}

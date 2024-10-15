@@ -1,0 +1,117 @@
+{% extends "template.html" %}
+{% block title %}Universities and Colleges{% endblock %}
+{% block body %}
+<!-- page content -->
+<div class="row" role="main">
+    <div class="">
+      
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Student Profile</h2>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                <div class="profile_img">
+                  <div id="crop-avatar">
+                    <!-- Current avatar -->
+                    {% if not session["is_teacher"] %}
+                    <img class="img-responsive avatar-view" src="{{ session['picture'] }}" alt="Profile Picture" style="width: 100%; padding: 10px;">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <h3>{{ student.name }}</h3>
+                <ul class="h5 list-unstyled">
+                  <li>Class & Class number: {{ student.cls + " (" + student.c_num.__repr__() + ")" }}</li>
+                  <li>Email: <a href="mailto://{{ student.id }}@elearn.logosacademy.edu.hk">{{ student.id }}@elearn.logosacademy.edu.hk</a></li>
+                  <li>Curriculum: {{ student.curriculum if student.curriculum else "Not declared" }}</li>
+                  <br>
+                  <li>As only the most recent file is stored, if you happen to have more than one document for each submission type, please combine them into one document before submission.</li>
+                </ul>
+                <form action="/home" method="post" enctype="multipart/form-data">
+                  <input type="file" name="pg" id="pg" style="display: none;" hidden onchange="this.form.submit();" />
+                  <label for="pg" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> PG</label>
+                  <input type="hidden" name="type" id="type" value="pg" hidden>
+                  {% if files[0] %}
+                  <p id="file-chosen" style="display: inline;">{{ files[0].filename }}</p>
+                  <a href="/pg_download/{{ student.id }}" class="btn btn-round btn-success">Download</a>
+                  {% endif %}
+                </form>
+                <form action="/home" method="post" enctype="multipart/form-data">
+                  <input type="file" name="recommendation" id="recommendation" style="display: none;" hidden onchange="this.form.submit();" />
+                  <label for="recommendation" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> Recommendation</label>
+                  <input type="hidden" name="type" id="type" value="recommendation" hidden>
+                  {% if files[1] %}
+                  <p id="file-chosen" style="display: inline;">{{ files[1].filename }}</p>
+                  <a href="/recommendation_download/{{ student.id }}" class="btn btn-round btn-success">Download</a>
+                  {% endif %}
+                </form>
+                <form action="/home" method="post" enctype="multipart/form-data">
+                  <input type="file" name="certificates" id="certificates" style="display: none;" hidden onchange="this.form.submit();" />
+                  <label for="certificates" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> Certificates</label>
+                  <input type="hidden" name="type" id="type" value="certificates" hidden>
+                  {% if files[2] %}
+                  <p id="file-chosen" style="display: inline;">{{ files[2].filename }}</p>
+                  <a href="/certificates_download/{{ student.id }}" class="btn btn-round btn-success">Download</a>
+                  {% endif %}
+                </form>
+                <form action="/home" method="post" enctype="multipart/form-data">
+                  <input type="file" name="transcripts" id="transcripts" style="display: none;" hidden onchange="this.form.submit();" />
+                  <label for="transcripts" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> Transcripts</label>
+                  <input type="hidden" name="type" id="type" value="transcripts" hidden>
+                  {% if files[3] %}
+                  <p id="file-chosen" style="display: inline;">{{ files[3].filename }}</p>
+                  <a href="/transcripts_download/{{ student.id }}" class="btn btn-round btn-success">Download</a>
+                  {% endif %}
+                </form>
+                <form action="/home" method="post" enctype="multipart/form-data">
+                  <input type="file" name="others" id="others" style="display: none;" hidden onchange="this.form.submit();" />
+                  <label for="others" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> Others</label>
+                  <input type="hidden" name="type" id="type" value="others" hidden>
+                  {% if files[4] %}
+                  <p id="file-chosen" style="display: inline;">{{ files[4].filename }}</p>
+                  <a href="/others_download/{{ student.id }}" class="btn btn-round btn-success" style="margin: 5px;">Download</a>
+                  {% endif %}
+                </form>
+              </div>
+              <div class="col-md-3 col-sm-3 col-xs-12">
+                <h3>Status</h3>
+                {% if info_sent %}
+                <div style="border: solid 5px #19d879; border-radius: 10px;">
+                  <h2 style="text-align: center;">Info Sent :D</h2>
+                </div>
+                {% else %}
+                <div style="border: solid 5px #9a0000; border-radius: 10px;">
+                  <h2 style="text-align: center;">Info NOT Sent :(</h2>
+                </div>
+                {% endif %}
+                <div style="margin-top: 10px;">
+                  <a href="/edit_student/{{ student.id }}" class="btn btn-round btn-success">
+                    <i class="fa fa-edit m-right-xs"></i>
+                    Edit Student Profile
+                  </a>
+                </div>
+                {% if session["is_teacher"] %}
+                <h3>Notes</h3>
+                <p>{{ student.notes if student.notes else "[EMPTY]" }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- /page content -->
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

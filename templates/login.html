@@ -1,0 +1,53 @@
+{% extends "template.html" %}
+{% block title %}Universities and Colleges{% endblock %}
+{% block body %}
+<!-- page content -->
+<div class="row" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Login Page</h3>
+        </div>
+      </div>
+      
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <form action="#" method="post">
+                            <input type="file" name="pg" id="pg" style="display: none;" hidden />
+                            <label for="pg" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> PG</label>
+                            <p id="file-chosen" style="display: inline;"></p>
+                            {% if file_exists %}
+                            <a href="#" class="btn btn-round btn-success">Download</a>
+                            {% endif %}
+                        </form>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /page content -->
+
+{% endblock %}
+{% block js %}
+<script>
+    const btnPg = document.getElementById('pg');
+    const fileChosen = document.getElementById('file-chosen');
+    btnPg.addEventListener('change', function(){
+        fileChosen.textContent = this.files[0].name
+    })
+</script>
+{% endblock %}

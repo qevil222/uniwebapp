@@ -1,0 +1,44 @@
+{% extends "template.html" %}
+{% block title %}Edit Student{% endblock %}
+{% block body %}
+
+<!-- page content -->
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="dashboard_graph">
+      <div class="row x_title">
+        <div class="col-md-6">
+          <h2>Edit Student</h2>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <form action="/edit_student/{{ student.id }}" method="post">
+                Name: <input type="text" name="name" id="name" value="{{ student.name }}"><br>
+                Class: <input type="text" name="cls" id="cls" value="{{ student.cls }}"><br>
+                Class Number: <input type="text" name="c_num" id="c_num" value="{{ student.c_num}}"><br>
+                Curriculum:
+                <label><input type="radio" name="curriculum" id="curriculum" value="DSE" {{ "checked" if student.curriculum == "DSE" else "" }}> DSE</label>
+                <label><input type="radio" name="curriculum" id="curriculum" value="IB" {{ "checked" if student.curriculum == "IB" else "" }}> IB</label>
+                <label><input type="radio" name="curriculum" id="curriculum" value="NULL" {{ "checked" if not student.curriculum else "" }}> Not declared</label>
+                <br>
+                Info Sent? 
+                <label><input type="radio" name="info_sent" id="info_sent" value="1" {{ "checked" if student.info_sent else "" }}> Yes</label>
+                <label><input type="radio" name="info_sent" id="info_sent" value="0" {{ "checked" if not student.info_sent else "" }}> No</label>
+                <br>
+                Notes: <input type="text" name="notes" id="notes" value="{{ student.notes if student.notes else '' }}"><br>
+                <input type="hidden" name="id" id="id" value="{{ student.id }}" />
+                <button type="submit">Submit</button>
+            </form> 
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<!-- /page content -->
+{% endblock %}
+{% block js %}
+{% endblock %}

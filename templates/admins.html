@@ -1,0 +1,73 @@
+{% extends "template.html" %}
+{% block title %}Admin List{% endblock %}
+{% block body %}
+
+<!-- page content -->
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="dashboard_graph">
+      <div class="row x_title">
+        <div class="col-md-6">
+          <h2>Admin List</h2>
+        </div>
+        <div class="col-md-6">
+            <input type="text" id="adminInput" onkeyup="tableSearch()" placeholder="Search for names..." style="float: right;">
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <table id="adminList" class="table table-hover">
+            <tr class="header">
+                <th>Name</th>
+                <th>Gmail</th>
+                <th>Identity</th>
+                <th>Edit</th>
+            </tr>
+            {% for admin in admins %}
+            <tr>
+                <td>{{ admin.name }}</td>
+                <td><a href="mailto://{{ admin.email }}"></a>{{ admin.email }}</td>
+                <td>{{ "Superuser" if admin.is_superuser else "Admin" }}</td>
+                <td>
+                  <a href="/edit_admin/{{ admin.email }}" class="btn btn-round btn-success">
+                  <i class="fa fa-edit m-right-xs"></i>
+                  Edit Staff Details
+                  </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<!-- /page content -->
+
+<script>
+function tableSearch() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("adminInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("adminList");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock %}

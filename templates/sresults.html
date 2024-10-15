@@ -1,0 +1,74 @@
+{% extends "template.html" %}
+{% block title %}Survey Resultss{% endblock %}
+{% block body %}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Survey Results</h3>
+        </div>
+
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- table -->
+      <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="x_panel">
+    <div class="x_content">
+      <table id="sresultTable" class="table table-hover">
+      <h2>Local</h2>
+      <tbody>
+      <tr class="header">
+          <th>JUPAS code</th>
+          <th>University</th>
+          <th>Degree</th>
+          <th>Subject 1</th>
+          <th>Subject 2</th>
+          <th>Subject 3</th>
+      </tr>
+      {% for programme in programmes %}
+      <tr>
+        {% if subj1[programme[0]] + subj2[programme[0]] + subj3[programme[0]] > 0 %}
+          <td>{{ programme[0] }}</td>
+          <td>{{ programme[1] }}</td>
+          <td>{{ programme[2] }}</td>
+          <td>{{ subj1[programme[0]] }}</td>
+          <td>{{ subj2[programme[0]] }}</td>
+          <td>{{ subj3[programme[0]] }}</td>
+        {% endif %}  
+      </tr>
+      {% endfor %}
+      </tbody>
+      </table>
+      <table class="table table-hover">
+      <h2>Overseas</h2>
+      <tbody>
+      <tr class="header">
+          <th>1st Choice</th>
+          <th>2nd Choice</th>
+          <th>3rd Choice</th>
+      </tr>
+      <tr>
+        <td>{{ overseas[0] }}</td>
+        <td>{{ overseas[1] }}</td>
+        <td>{{ overseas[2] }}</td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+        
+      </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "template.html" %}
+{% block title %}Student Survey{% endblock %}
+{% block body %}
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>University and College Survey</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <small>(*Note: Please know that this is not an annonymous survey and results collected are used only for academic purposes)</small>
+        </div>
+        <div class="x_content">
+          <form action="/survey" method="post" class="form-horizontal form-label-left">
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject-1">First Choice <span class="required">*</span></label>
+                <input type="text" name="subject-1" id="subject-1" list="course-codes" required="required">
+                <datalist id="course-codes">
+                  {% for programme in programmes %}
+                    <option value="{{ programme[0]}}&nbsp;&nbsp;&nbsp;{{programme[2] }}"></option>
+                  {% endfor %} 
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject-1">Second Choice <span class="required"></span></label>
+                <input type="text" name="subject-2" id="subject-2" list="course-codes" >
+                <datalist id="course-codes">
+                  {% for programme in programmes %}
+                    <option value="{{ programme[0]}}&nbsp;&nbsp;&nbsp;{{programme[2] }}"></option>
+                  {% endfor %}
+                </datalist>
+            </div>   
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject-1">Third Choice <span class="required"></span></label>
+                <input type="text" name="subject-3" id="subject-3" list="course-codes" >
+                <datalist id="course-codes">
+                  {% for programme in programmes %}
+                    <option value="{{ programme[0]}}&nbsp;&nbsp;&nbsp;{{programme[2] }}"></option>
+                  {% endfor %}
+                </datalist>
+            </div>   
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject-1">Ideal Location <span class="required"></span></label>
+                <input type="text" name="ideal-location" id="ideal-location" >
+            </div> 
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+          </form>
+          <br />
+          <!-- <form id="form" action="/survey" method="post" class="form-horizontal form-label-left">
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name2">First Name <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="first-name2" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div id="gender" class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                    <input type="radio" name="gender" value="male"> Male
+                  </label>
+                  <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                    <input type="radio" name="gender" value="female"> Female
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="birthday2" class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input id="birthday2" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                </div>
+              </div>
+            <div class="form-group">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="reset">Reset</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </form> -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+<script>
+function validateFormSurvey() {
+    
+}
+// SSL (wait for tam sir)
+// Form validation with js (client-side, in this file)
+// Some processing of form data (server-side, in app.py)
+</script>
+{% endblock %}
