@@ -323,8 +323,8 @@ def view_student(id):
                 Others.query.get(id)
             )
             info_sent = bool(student.info_sent)
-            s_results = sResults.query.filter_by(student_id=id).all()
-            return render_template("profile.html", files=files, info_sent=info_sent, student=student, s_results=s_results)
+            s_result = sResults.query.filter_by(student_id=id).order_by(sResults.time.desc()).first()
+            return render_template("profile.html", files=files, info_sent=info_sent, student=student, s_result=s_result)
 
 @app.route("/edit_student/<id>", methods=["GET", "POST"])
 def edit_student(id):

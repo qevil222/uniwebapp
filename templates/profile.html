@@ -99,11 +99,15 @@
                 </div>
                 {% if session["is_teacher"] %}
                 <h3>Notes</h3>
-                <p>{{ student.notes if student.notes else "[EMPTY]" }}</p>
+                <p>{{ student.notes if student.notes else "" }}</p>
                 {% endif %}
-                {% for s_result in s_results %}
-                <p>{{ s_result.sub1 + " " + s_result.sub2 + " " + s_result.sub3 + " " + s_result.country }}</p><br>
-                {% endfor %}
+                <p>Most recent survey results: </p>
+                <ol>
+                  <li>{{ s_result.sub1 }}</li>
+                  {% if s_result.sub2 %}<li>{{ s_result.sub2 }}</li>{% endif %}
+                  {% if s_result.sub3 %}<li>{{ s_result.sub3 }}</li>{% endif %}
+                </ol>
+                {% if s_result.country %}<p>{{ "Ideal Country/Region: " + s_result.country }}</p>{% endif %}
               </div>
             </div>
           </div>
