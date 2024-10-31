@@ -7,6 +7,7 @@ from authlib.integrations.flask_client import OAuth
 import json
 import os
 import time as t
+from datetime import datetime as dt
 from csv_read import programmes as JUPAS_PROGRAMMES
 import collections
 
@@ -191,7 +192,7 @@ def callback():
             session["staff_level"] = 1
         else:
             session["staff_level"] = 0
-    session["is_teacher"] = True         # OVERRIDE
+    session["is_teacher"] = True        # OVERRIDE
     session["staff_level"] = 2          # OVERRIDE
     return redirect('/home')
 
@@ -210,7 +211,6 @@ def logout():
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    # Student interface
     if not session["is_teacher"]:
         student_id = session["email"].split("@")[0].lower()
         if request.method == "GET":
@@ -256,7 +256,6 @@ def home():
                 db.session.add(upload)
                 db.session.commit()
                 return redirect("/home")
-    # Teacher interface
     return redirect("/unis")
     
 @app.route('/pg_download/<upload_id>')
@@ -324,7 +323,8 @@ def view_student(id):
                 Others.query.get(id)
             )
             info_sent = bool(student.info_sent)
-            return render_template("profile.html", files=files, info_sent=info_sent, student=student)
+            s_results = sResults.query.filter_by(student_id=id).all()
+            return render_template("profile.html", files=files, info_sent=info_sent, student=student, s_results=s_results)
 
 @app.route("/edit_student/<id>", methods=["GET", "POST"])
 def edit_student(id):
@@ -397,13 +397,16 @@ def survey():
 
 @app.route("/sresults")
 def sresults():
+    
     if not session["is_teacher"]:
         return redirect("/home")
-    results = sResults.query.all()
+    
+    # Fetch all rows and count no. of overseas choices
+    sResults_all = sResults.query.all()
     subj1 = []
     subj2 = []
     subj3 = []
-    for result in results:
+    for result in sResults_all:
         subj1.append(result.sub1)
         subj2.append(result.sub2)
         subj3.append(result.sub3)
@@ -414,9 +417,20 @@ def sresults():
     subj1 = collections.Counter(subj1)
     subj2 = collections.Counter(subj2)
     subj3 = collections.Counter(subj3)
+
+    # Get printout of sResults table (with name, class, class no.)
+    printouts = sResults.query\
+                        .join(Students, sResults.student_id==Students.id)\
+                        .add_columns(Students.name, Students.cls, Students.c_num, sResults.time, 
+                                     sResults.sub1, sResults.sub2, sResults.sub3, sResults.country)\
+                        .filter(sResults.student_id == Students.id)\
+                        .order_by(sResults.time.desc())
+    def format_time(unix_time: int) -> str: return dt.fromtimestamp(unix_time).strftime("%Y-%m-%d %H:%M:%S")
+
     return render_template(
         "sresults.html", session=session, programmes=JUPAS_PROGRAMMES, subj1=subj1, subj2=subj2, subj3=subj3, 
-        overseas=(count_overseas_subj1, count_overseas_subj2, count_overseas_subj3)
+        overseas=(count_overseas_subj1, count_overseas_subj2, count_overseas_subj3), 
+        printouts=printouts, format_time=format_time
     )
 
 if __name__ == "__main__":

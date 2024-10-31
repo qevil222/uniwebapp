@@ -101,6 +101,9 @@
                 <h3>Notes</h3>
                 <p>{{ student.notes if student.notes else "[EMPTY]" }}</p>
                 {% endif %}
+                {% for s_result in s_results %}
+                <p>{{ s_result.sub1 + " " + s_result.sub2 + " " + s_result.sub3 + " " + s_result.country }}</p><br>
+                {% endfor %}
               </div>
             </div>
           </div>

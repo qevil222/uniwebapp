@@ -1,5 +1,5 @@
 {% extends "template.html" %}
-{% block title %}Survey Resultss{% endblock %}
+{% block title %}Survey Results{% endblock %}
 {% block body %}
 
 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -63,6 +63,31 @@
         <td>{{ overseas[1] }}</td>
         <td>{{ overseas[2] }}</td>
       </tr>
+      <table class="table table-hover">
+      <h2>Survey Results</h2>
+      <tbody>
+      <tr class="header">
+          <th>Name</th>
+          <th>Class</th>
+          <th>Class No.</th>
+          <th>Date & Time</th>
+          <th>Subject 1</th>
+          <th>Subject 2</th>
+          <th>Subject 3</th>
+          <th>Country</th>
+      </tr>
+      {% for printout in printouts %}
+        <tr>
+          <td>{{ printout.name }}</td>
+          <td>{{ printout.cls }}</td>
+          <td>{{ printout.c_num }}</td>
+          <td>{{ format_time(printout.time) }}</td>
+          <td>{{ printout.sub1 }}</td>
+          <td>{{ printout.sub2 }}</td>
+          <td>{{ printout.sub3 }}</td>
+          <td>{{ printout.country }}</td>
+        </tr>
+      {% endfor %}
       </tbody>
       </table>
     </div>
